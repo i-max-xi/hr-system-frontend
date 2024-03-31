@@ -17,6 +17,11 @@ export const Nav = () => {
             icon: 'pi pi-palette',
             url: '/employees'
         },
+        {
+            label: 'New Employee',
+            icon: 'pi pi-palette',
+            url: '/newEmployee'
+        },
     ];
 
     const handleTabChange = (event) => {

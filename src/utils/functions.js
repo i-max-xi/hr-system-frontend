@@ -11,7 +11,6 @@ export const _get = (route, params) => {
         } else {
           reject({
             message: 'An unexpected error occurred',
-            code: 'CLI500',
           });
         }
       });
@@ -28,7 +27,6 @@ export const _post = (route, option) => {
         } else {
           reject({
             message: 'An unexpected error occurred',
-            code: 'CLI500',
           });
         }
       });

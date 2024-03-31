@@ -1,7 +1,6 @@
 import React from "react";
 import { Card } from "primereact/card";
 import { Link } from "react-router-dom";
-import { Button } from "primereact/button";
 import "./pagesStyles.css";
 
 export const Home = () => {
