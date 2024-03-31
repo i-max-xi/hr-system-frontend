@@ -1,0 +1,7 @@
+.routesContainer {
+    gap: 2rem;
+    display: flex;
+    margin-top: 2rem;
+    align-items: center;
+    justify-content: space-evenly;
+}

@@ -4,6 +4,16 @@ import { Employees, Home, NewEmployee } from "./pages";
 import NoPage from "./pages/NoPage";
 import Layout from "./pages/Layout";
 
+import "bootstrap/dist/css/bootstrap.min.css";
+
+
+// Prime react
+//theme
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+
+//core
+import "primereact/resources/primereact.min.css";
+
 function App() {
   return (
     <div className="App">

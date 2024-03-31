@@ -1,42 +1,59 @@
-import React, { useState, useEffect } from "react";
-import { _get } from "../utils/functions";
+import React from "react";
+import { Card } from "primereact/card";
+import { Link } from "react-router-dom";
+import { Button } from "primereact/button";
+import "./pagesStyles.css";
 
 export const Home = () => {
-  const [employees, setEmployees] = useState([]);
-
-  useEffect(() => {
-    const fetchEmployees = async () => {
-      try {
-        const response = await _get("employees");
-        setEmployees(response);
-      } catch (error) {
-        console.error("Error fetching employees:", error);
-      }
-    };
-
-    fetchEmployees();
-  }, []);
+  const pages = [
+    {
+      title: "Employees",
+      subTitle: "Access the list of all employees",
+      route: "/employees",
+      icon: "https://softr-assets-eu-shared.s3.eu-central-1.amazonaws.com/studio/blocks/assets/logo-placeholder.png",
+    },
+    {
+      title: "New Employee",
+      subTitle: "Register a new employee",
+      route: "/newEmployee",
+      icon: "https://softr-assets-eu-shared.s3.eu-central-1.amazonaws.com/studio/blocks/assets/logo-placeholder.png",
+    },
+  ];
 
   return (
-    <div>
-      <h1>Employee List</h1>
-      <ul>
-        {employees.map((employee) => (
-          <li key={employee.id}>
-            <img
-              src={employee.avatar}
-              alt={`${employee.firstName} ${employee.lastName}`}
-            />
-            <div>
-              <p>Name: {`${employee.firstName} ${employee.lastName}`}</p>
-              <p>Email: {employee.email}</p>
-              <p>Position: {employee.position}</p>
-              <p>Department: {employee.department}</p>
-              <p>Start Date: {employee.startDate}</p>
-            </div>
-          </li>
+    <div className="container pb-5">
+      <img
+        className="rounded"
+        src="https://is1-ssl.mzstatic.com/image/thumb/Purple116/v4/fb/f9/17/fbf917b6-046d-80f3-4a2b-81a73f090561/AppIcon-1x_U007emarketing-0-7-0-85-220.png/512x512bb.jpg"
+        alt="header"
+      />
+      <div className="routesContainer">
+        {pages.map(({ title, route, icon, subTitle }, index) => (
+          <Card
+            key={index}
+            title={title}
+            subTitle={subTitle}
+            footer={
+              <Link to={route}>
+                <button className="btn btn-primary">Open</button>
+              </Link>
+            }
+            header={<img alt="Card" src={icon} />}
+            className="col-12 col-sm-4"
+          ></Card>
+
+          // <div key={title} class="card" className="col-12 col-sm-6">
+          //   <img class="card-img-top" src={icon} alt={title} />
+          //   <div class="card-body">
+          //     <h5 class="card-title">{title}</h5>
+          //     <p class="card-text">{subTitle}</p>
+          //     <Link to={route}>
+          //       <button className="btn btn-primary">Go To</button>
+          //     </Link>
+          //   </div>
+          // </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
