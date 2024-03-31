@@ -40,17 +40,6 @@ export const Home = () => {
             }
             className="col-6 col-sm-4"
           ></Card>
-
-          // <div key={title} class="card" className="col-12 col-sm-6">
-          //   <img class="card-img-top" src={icon} alt={title} />
-          //   <div class="card-body">
-          //     <h5 class="card-title">{title}</h5>
-          //     <p class="card-text">{subTitle}</p>
-          //     <Link to={route}>
-          //       <button className="btn btn-primary">Go To</button>
-          //     </Link>
-          //   </div>
-          // </div>
         ))}
       </div>
     </div>

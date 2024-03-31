@@ -32,7 +32,10 @@ export const NewEmployee = ({ selectedEmployeeID, onSubmit, title }) => {
       }
     };
 
-    fetchEmployee();
+    if(selectedEmployeeID){
+      fetchEmployee();
+    }
+
   }, [selectedEmployeeID]);
 
 

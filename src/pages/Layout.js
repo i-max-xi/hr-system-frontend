@@ -9,8 +9,6 @@ const Layout = () => {
       <Nav />
 
       <Outlet />
-      {/* <ScrollTop className="bg-warning" /> */}
-      {/* <Footer /> */}
     </>
   );
 };

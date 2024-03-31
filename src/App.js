@@ -22,7 +22,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="/" element={<Home />} />
+          <Route index  element={<Home />} />
           <Route path="/employees" element={<Employees />} />
           <Route path="/newEmployee" element={<NewEmployee />} />
           <Route path="*" element={<NoPage />} />
