@@ -14,12 +14,12 @@ export const Nav = () => {
         },
         {
             label: 'Employees',
-            icon: 'pi pi-palette',
+            icon: 'pi pi-address-book',
             url: '/employees'
         },
         {
             label: 'New Employee',
-            icon: 'pi pi-palette',
+            icon: 'pi pi-plus',
             url: '/newEmployee'
         },
     ];

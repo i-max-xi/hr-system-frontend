@@ -32,3 +32,35 @@ export const _post = (route, option) => {
       });
   });
 };
+
+export const _patch = (route, option) => {
+  return new Promise((resolve, reject) => {
+    axios.patch(apiRoute + route, option)
+      .then((response) => resolve(response?.data))
+      .catch((error) => {
+        if (error.response) {
+          reject(error.response.data);
+        } else {
+          reject({
+            message: 'An unexpected error occurred',
+          });
+        }
+      });
+  });
+};
+
+export const _delete = (route, option) => {
+  return new Promise((resolve, reject) => {
+    axios.delete(apiRoute + route, option)
+      .then((response) => resolve(response?.data))
+      .catch((error) => {
+        if (error.response) {
+          reject(error.response.data);
+        } else {
+          reject({
+            message: 'An unexpected error occurred',
+          });
+        }
+      });
+  });
+};

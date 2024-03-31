@@ -1,22 +1,41 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Calendar } from "primereact/calendar";
 import { Dropdown } from "primereact/dropdown";
-import { _post } from "../utils/functions";
+import { _get, _patch, _post } from "../utils/functions";
 import { Toast } from "primereact/toast";
 
-export const NewEmployee = ({ selectedEmployee, onSubmit, title }) => {
+export const NewEmployee = ({ selectedEmployeeID, onSubmit, title }) => {
   const toastRef = useRef();
+
   const [employee, setEmployee] = useState(
-    selectedEmployee || {
-      firstName: "",
-      lastName: "",
-      email: "",
-      department: "",
-      startDate: null,
-    }
-  );
+    {
+       firstName: "",
+       lastName: "",
+       email: "",
+       department: "",
+       startDate: null,
+     }
+   );
+
+  useEffect(() => {
+    const fetchEmployee = async () => {
+      try {
+        const response = await _get(`employees/${selectedEmployeeID}`);
+        setEmployee(response);
+      } catch (error) {
+        toastRef.current.show({
+          severity: "error",
+          summary: "Failed to fetch employee data.",
+        });
+      }
+    };
+
+    fetchEmployee();
+  }, [selectedEmployeeID]);
+
+
 
   const departments = [
     { label: "Engineering", value: "Engineering" },
@@ -43,7 +62,11 @@ export const NewEmployee = ({ selectedEmployee, onSubmit, title }) => {
 
   const handleSubmit = async () => {
     try {
-      await _post("employees", employee);
+      if (selectedEmployeeID) {
+        await _patch(`employees/${selectedEmployeeID}`, employee); // Update existing employee
+      } else {
+        await _post("employees", employee); // Create new employee
+      }
 
       setEmployee({
         firstName: "",
@@ -54,12 +77,12 @@ export const NewEmployee = ({ selectedEmployee, onSubmit, title }) => {
       });
       toastRef.current.show({
         severity: "success",
-        summary: "Successfully added employee.",
+        summary: selectedEmployeeID ? "Successfully updated employee." : "Successfully added employee.",
       });
     } catch (error) {
       toastRef.current.show({
         severity: "error",
-        summary: "Could not add employee",
+        summary: selectedEmployeeID ? "Failed to update employee information." : "Failed to add employee.",
       });
     }
   };
@@ -127,7 +150,7 @@ export const NewEmployee = ({ selectedEmployee, onSubmit, title }) => {
             <Button
               className="btn btn-primary"
               label="Submit"
-              onClick={onSubmit || handleSubmit}
+              onClick={handleSubmit}
             />
           </div>
         </div>

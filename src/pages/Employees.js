@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { _get, _post } from "../utils/functions";
+import { _delete, _get, _post } from "../utils/functions";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Toast } from "primereact/toast";
@@ -14,19 +14,19 @@ export const Employees = () => {
   const [displayEditDialog, setDisplayEditDialog] = useState(false);
   const [displayDeleteDialog, setDisplayDeleteDialog] = useState(false);
 
-  useEffect(() => {
-    const fetchEmployees = async () => {
-      try {
-        const response = await _get("employees");
-        setEmployees(response);
-      } catch (error) {
-        toast.current.show({
-          severity: "error",
-          summary: "Failed to fetch employees data.",
-        });
-      }
-    };
+  const fetchEmployees = async () => {
+    try {
+      const response = await _get("employees");
+      setEmployees(response);
+    } catch (error) {
+      toast.current.show({
+        severity: "error",
+        summary: "Failed to fetch employees data.",
+      });
+    }
+  };
 
+  useEffect(() => {
     fetchEmployees();
   }, []);
 
@@ -43,16 +43,18 @@ export const Employees = () => {
   const handleEditDialogHide = () => {
     setDisplayEditDialog(false);
     setSelectedEmployee(null);
+    fetchEmployees();
   };
 
   const handleDeleteDialogHide = () => {
     setDisplayDeleteDialog(false);
     setSelectedEmployee(null);
+    fetchEmployees();
   };
 
   const handleEditSubmit = async () => {
     try {
-      await _post("employees/update", selectedEmployee);
+      await _post("employees", selectedEmployee);
       toast.current.show({
         severity: "success",
         summary: "Employee information updated successfully.",
@@ -67,16 +69,15 @@ export const Employees = () => {
   };
 
   const handleDeleteSubmit = async () => {
-    // Delete employee
     try {
-      await _post("employees/delete", { id: selectedEmployee.id });
+      await _delete(`employees/${selectedEmployee}`);
       toast.current.show({
         severity: "success",
         summary: "Employee deleted successfully.",
       });
 
       // After successful delete, update the employee local list
-      setEmployees(employees.filter(emp => emp.id !== selectedEmployee.id));
+      setEmployees(employees.filter((emp) => emp.id !== selectedEmployee));
     } catch (error) {
       toast.current.show({
         severity: "error",
@@ -114,8 +115,7 @@ export const Employees = () => {
           body={(rowData) => (
             <button
               className="btn btn-danger remove"
-              onClick={() => 
-                handleDeleteClick(rowData.id)}
+              onClick={() => handleDeleteClick(rowData.id)}
             >
               Delete
             </button>
@@ -129,8 +129,11 @@ export const Employees = () => {
         modal
         className="w-75"
       >
-        <NewEmployee selectedEmployee={selectedEmployee} onSubmit={handleEditSubmit} title=" "/>
-        {/* <Button label="Submit" onClick={handleEditSubmit} /> */}
+        <NewEmployee
+          selectedEmployeeID={selectedEmployee}
+          onSubmit={handleEditSubmit}
+          title=" "
+        />
       </Dialog>
 
       <Dialog
@@ -139,9 +142,21 @@ export const Employees = () => {
         onHide={handleDeleteDialogHide}
         modal
       >
-        <div>Are you sure you want to delete this employee?</div>
-        <Button label="Yes" onClick={handleDeleteSubmit} className="btn btn-danger" />
-        <Button label="No" onClick={handleDeleteDialogHide} className="btn btn-info" />
+        <div className="d-flex flex-column" style={{gap: "1rem"}}>
+          <p>Are you sure you want to delete this employee?</p>
+          <div className="d-flex" style={{gap: "1rem"}}>
+            <Button
+              label="Yes"
+              onClick={handleDeleteSubmit}
+              className="btn btn-danger"
+            />
+            <Button
+              label="No"
+              onClick={handleDeleteDialogHide}
+              className="btn btn-info text-white"
+            />
+          </div>
+        </div>
       </Dialog>
     </div>
   );

@@ -11,6 +11,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 //theme
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 
+import 'primeicons/primeicons.css';
+        
+
 //core
 import "primereact/resources/primereact.min.css";
 

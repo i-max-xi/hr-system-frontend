@@ -9,13 +9,13 @@ export const Home = () => {
       title: "Employees",
       subTitle: "Access the list of all employees",
       route: "/employees",
-      icon: "https://softr-assets-eu-shared.s3.eu-central-1.amazonaws.com/studio/blocks/assets/logo-placeholder.png",
+      icon: 'pi pi-address-book',
     },
     {
       title: "New Employee",
       subTitle: "Register a new employee",
       route: "/newEmployee",
-      icon: "https://softr-assets-eu-shared.s3.eu-central-1.amazonaws.com/studio/blocks/assets/logo-placeholder.png",
+      icon: 'pi pi-plus',
     },
   ];
 
@@ -31,14 +31,14 @@ export const Home = () => {
           <Card
             key={index}
             title={title}
+            header={<i style={{ fontSize: '2rem' }} className={icon}></i>}
             subTitle={subTitle}
             footer={
               <Link to={route}>
                 <button className="btn btn-primary">Open</button>
               </Link>
             }
-            header={<img alt="Card" src={icon} />}
-            className="col-12 col-sm-4"
+            className="col-6 col-sm-4"
           ></Card>
 
           // <div key={title} class="card" className="col-12 col-sm-6">
